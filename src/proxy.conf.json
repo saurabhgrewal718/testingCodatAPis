@@ -1,0 +1,8 @@
+{
+    "/companies":{
+        "target":"https://api.codat.io",
+        "secure":true,
+        "changeOrigin":true,
+        "logLevel":"debug"
+    }
+}
