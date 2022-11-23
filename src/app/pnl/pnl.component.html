@@ -1,0 +1,40 @@
+<div style="display: flex;flex-direction: row;justify-content: center;align-items: center;">
+    <div style="flex: 1;">
+        <form>
+        <mat-form-field appearance="fill">
+            <mat-label>Select Duration</mat-label>
+            <mat-select [(ngModel)]="selectedValue" name="dur" (change)="changeDuration($event)">
+            <mat-option *ngFor="let food of dur" [value]="food">
+                {{food}}
+            </mat-option>
+            </mat-select>
+        </mat-form-field>
+        </form>
+    </div>
+    <div style="flex: 1;justify-content: center;align-items: center;">
+    <button mat-raised-button color="primary" (click)="callApi(selectedValue)">Primary</button>
+    </div>
+</div>
+
+<mat-spinner *ngIf="isLoading"></mat-spinner>
+
+
+<div style="display: flex;height: 100%;" *ngIf="!isLoading">
+    <div style="flex:1;">
+        <p>{{pnldata | json}}</p>
+    </div>
+    <div style="flex:1;flex-direction: row;flex-wrap:wrap;margin: 30px;">
+       
+        <div class="card" *ngFor="let card of totalCards">
+            <div class="container">
+              <h4><b>{{card}}</b></h4> 
+              <p>Architect</p> 
+            </div>
+          </div>
+
+    </div>
+</div>
+
+
+
+
