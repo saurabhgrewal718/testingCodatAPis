@@ -3,19 +3,33 @@
         <form>
         <mat-form-field appearance="fill">
             <mat-label>Select Duration</mat-label>
-            <mat-select [(ngModel)]="selectedValue" name="dur" (change)="changeDuration($event)">
+            <mat-select [(ngModel)]="selectedValue" name="dur" (selectionChange)="callDuration($event)">
             <mat-option *ngFor="let food of dur" [value]="food">
                 {{food}}
             </mat-option>
             </mat-select>
         </mat-form-field>
         </form>
+        <mat-form-field appearance="fill">
+            <mat-label>Choose a Date</mat-label>
+            <input matInput [matDatepicker]="picker"
+                   (dateInput)="addEvent('input', $event)">
+            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker [startAt]="startDate"></mat-datepicker>
+          </mat-form-field>
     </div>
     <div style="flex: 1;justify-content: center;align-items: center;">
-    <button mat-raised-button color="primary" (click)="callApi(selectedValue)">Primary</button>
+        <div style="display:flex;flex-direction: column;">
+            <div style="flex: 1;justify-content: center;align-items: center;">
+                <button mat-raised-button color="primary" (click)="callApi(selectedValue)">Search</button>
+            </div>
+        </div>
     </div>
 </div>
 
+<div class="column">
+    <canvas id="mychart" width="1392" height="696" style="display: block; box-sizing: border-box; height: 348px; width: 696px;"></canvas>
+</div>
 <mat-spinner *ngIf="isLoading"></mat-spinner>
 
 
@@ -25,10 +39,35 @@
     </div>
     <div style="flex:1;flex-direction: row;flex-wrap:wrap;margin: 30px;">
        
-        <div class="card" *ngFor="let card of totalCards">
+        <div class="card">
             <div class="container">
-              <h4><b>{{card}}</b></h4> 
-              <p>Architect</p> 
+              <h4><b>Total Revenue</b></h4> 
+              <p class="cardfont">{{IncomeThisMonth}}</p> 
+              <p [ngClass]="ChangeOfIncome>0?'profitText':'lossText'">{{ChangeOfIncome}} %
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="container">
+              <h4><b>Total Expenses</b></h4> 
+              <p class="cardfont">{{ExpenseThisMonth}}</p> 
+              <p [ngClass]="ChangeOfExpense>0?'profitText':'lossText'">{{ChangeOfExpense}} %
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="container">
+              <h4><b>Gross Revenue</b></h4> 
+              <p class="cardfont">{{GPThisMonth}}</p> 
+              <p [ngClass]="ChangeOfGP>0?'profitText':'lossText'">{{ChangeOfGP}} %
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="container">
+              <h4><b>Net Revenue</b></h4> 
+              <p class="cardfont">{{NPThisMonth}}</p> 
+              <p [ngClass]="ChangeOfNP>0?'profitText':'lossText'">{{ChangeOfNP}} %
             </div>
           </div>
 

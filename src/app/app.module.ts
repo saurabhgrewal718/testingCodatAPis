@@ -12,7 +12,9 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { NgxSpinnerModule } from "ngx-spinner";
 import { DatePipe } from '@angular/common';
-
+import {MatInputModule} from '@angular/material/input';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 
 @NgModule({
   declarations: [
@@ -26,8 +28,11 @@ import { DatePipe } from '@angular/common';
     HttpClientModule,
     MatSelectModule,
     MatButtonModule,
+    MatInputModule,
+    MatDatepickerModule,
     MatFormFieldModule,
     FormsModule,  
+    MatNativeDateModule,
     NgxSpinnerModule,
     ReactiveFormsModule,
     MatProgressSpinnerModule

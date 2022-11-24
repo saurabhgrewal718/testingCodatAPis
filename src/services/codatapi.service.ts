@@ -43,10 +43,22 @@ export class CodatapiService {
   }
 
 
-  async getPnl(): Promise<Observable<any>> {
-    return await this.http
-        .get<any>("/companies/37aca907-fa24-4505-8774-32d4c137c1a4/data/financials/profitAndLoss?periodLength=1&periodsToCompare=6",this.httpHeader)
-        .pipe(retry(1), catchError(this.processError));
+  async getPnl(myDate:any): Promise<Observable<any>> {
+    console.log("i am inside the getpnl and cheking date");
+    console.log(myDate);
+    if(myDate!=null){
+      return await this.http
+      .get<any>(`/companies/37aca907-fa24-4505-8774-32d4c137c1a4/data/financials/profitAndLoss?periodLength=1&periodsToCompare=6&startMonth=${myDate}%20`,this.httpHeader)
+      .pipe(retry(1), catchError(this.processError));
+    }else{
+      var myNewDate = new Date();
+      return await this.http
+      .get<any>(`/companies/37aca907-fa24-4505-8774-32d4c137c1a4/data/financials/profitAndLoss?periodLength=1&periodsToCompare=12&startMonth=${myNewDate}%20`,this.httpHeader)
+      .pipe(retry(1), catchError(this.processError));
+    }
+    
+    
+   
   }
 
   processError(err: any) {

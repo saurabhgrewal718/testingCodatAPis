@@ -3,11 +3,32 @@
     transition: 0.3s;
     width: 40%;
   }
+.body{
+    margin: 0;
+    padding: 0;
+}
   
   .card:hover {
     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
   }
-  
+
+  .profitText{
+      color: green;
+      font-size: 16px;
+      font-weight: bold;
+  }
+  .lossText{
+    color: red;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+  .cardfont{
+      font-size: 28px;
+      font-family: Arial, Helvetica, sans-serif;
+      font-weight: bold;
+      margin: 10px;
+  }
   .container {
     padding: 20px 16px;
     margin: 20px;
@@ -29,3 +50,32 @@
     display: none;
   }
   
+  .example-events {
+    height: 200px;
+    border: 1px solid #555;
+    overflow: auto;
+  }
+  
+  .columns {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 100%;
+  }
+  
+  .column {
+    flex: 1;
+  }
+  .myHeading{
+    font-size: 19px;
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: 800;
+    padding: 10px;
+    color: white;
+}
+
+#divChart{
+    display: block;
+    width: 800px;
+    height: 800px;
+}
