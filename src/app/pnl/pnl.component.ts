@@ -8,7 +8,7 @@ import {MatDatepicker, MatDatepickerInputEvent} from '@angular/material/datepick
 import { DatePipe, formatDate } from '@angular/common';
 import { Chart, registerables } from 'chart.js';
 Chart.register(...registerables);
-
+import { ChartType } from 'chart.js';
 
 @Component({
   selector: 'app-pnl',
@@ -44,6 +44,9 @@ export class PnlComponent implements OnInit {
 
   months:any = [];
   myDate:Date = new Date();
+  monthsForLabel:any = [];
+  expenseData:any = [];
+  revenueData:any = [];
   monthNames = [ "Jan", "Feb", "Mar", "Apr", "May", "Jun","Jul", "Aug", "Sep", "Oct", "Nov", "Dec" ];
 
 
@@ -56,170 +59,16 @@ export class PnlComponent implements OnInit {
   ngOnInit() {
     for(var i = 0; i < 6; i++) {
       this.months.push(this.monthNames[this.myDate.getMonth()] + ' ' + this.myDate.getFullYear());
+      this.monthsForLabel.push(this.monthNames[this.myDate.getMonth()]);
       this.myDate.setMonth(this.myDate.getMonth() - 1);
     }
+    this.monthsForLabel = this.monthsForLabel.reverse();
+   
     this.dur = this.months;
-    console.log(this.dur);
     this.newDate = new Date()
-    console.log(this.newDate);
     this.selectedValue = this.monthNames[this.newDate.getMonth()] + ' ' + this.newDate.getFullYear();
-    console.log(this.selectedValue);
-
-    const COLORS = [
-      '#4dc9f6',
-      '#f67019',
-      '#f53794',
-      '#537bc4',
-      '#acc236',
-      '#166a8f',
-      '#00a950',
-      '#58595b',
-      '#8549ba'
-    ];
-    const mychart = new Chart("mychart", {
-      type: 'line',
-      data: {
-        labels: ['jan', 'feb', 'mar', 'apr', 'may', 'jun'],
-        datasets: [
-          {
-            label: 'Dataset',
-            data: [12, 23, 34, 5,54,43],
-            borderColor: COLORS[0],
-            backgroundColor: COLORS[1],
-            fill: false
-          },
-          {
-            label: 'Dataset',
-            data: [122, 233, 34, -5,-54,63],
-            borderColor: COLORS[4],
-            backgroundColor: COLORS[3],
-            fill: false
-          }
-        ]
-      },
-      options: {
-        elements:{
-          line: {
-            tension:0.4
-          }
-        },
-        plugins: {
-          filler: {
-            propagate: false,
-          },
-          title: {
-            display: true,
-            text: "thxv"
-          }
-        },
-        interaction: {
-          intersect: false,
-        }
-      },
-    });
-
-    const mychart2 = new Chart("mychart2", {
-      type: 'line',
-      data: {
-        labels: ['jan', 'feb', 'mar', 'apr', 'may', 'jun'],
-        datasets: [
-          {
-            label: 'Dataset',
-            data: [12, 23, 34, 5,54,43],
-            borderColor: COLORS[0],
-            backgroundColor: COLORS[1],
-            fill: false
-          }
-        ]
-      },
-      options: {
-        elements:{
-          line: {
-            tension:0.4
-          }
-        },
-        plugins: {
-          filler: {
-            propagate: false,
-          },
-          title: {
-            display: true,
-            text: "thxv"
-          }
-        },
-        interaction: {
-          intersect: false,
-        }
-      },
-    });
-
-    const mychart3 = new Chart("mychart3", {
-      type: 'bar',
-  data: {
-    labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-    datasets:[
-      {
-        label: 'Dataset 1',
-        data: [12, -19, -3, 5, -2, -3],
-        borderColor: COLORS[3],
-        backgroundColor: COLORS[4],
-      },
-      {
-        label: 'Dataset 2',
-        data: [12, 19, 3, 5, 2, 3],
-        borderColor: COLORS[5],
-        backgroundColor: COLORS[1],
-      }
-    ]},
-  options: {
-    responsive: true,
-    plugins: {
-      legend: {
-        position: 'top',
-      },
-      title: {
-        display: true,
-        text: 'Chart.js Bar Chart'
-      }
-    }
-  },
-    });
-
-    const mychart4 = new Chart("mychart4", {
-      type: 'pie',
-      data: {labels: ['Red', 'Orange', 'Yellow', 'Green', 'Blue'],
-      datasets: [
-        {
-          label: 'Dataset 1',
-          data:[12, 19, 3, 5, 2, 3] ,
-          backgroundColor: [
-            '#4dc9f6',
-            '#f67019',
-            '#f53794',
-            '#537bc4',
-            '#acc236',
-            '#166a8f',
-            '#00a950',
-            '#58595b',
-            '#8549ba'
-          ],
-        }
-      ]},
-      options: {
-        responsive: true,
-        plugins: {
-          legend: {
-            position: 'top',
-          },
-          title: {
-            display: true,
-            text: 'Chart.js Pie Chart'
-          }
-        }
-      },
-    
-    });
-     
+    this.fetchpnl(this.datePipe.transform(this.newDate,"yyyy-MM-dd"));
+   
   }
 
   events: string[] = [];
@@ -230,6 +79,45 @@ export class PnlComponent implements OnInit {
     this.fetchpnl(this.changedDate);
   }
 
+  public barChartOptions: any = {
+    scaleShowVerticalLines: false,
+    responsive: true,
+    elements:{
+      line: {
+        tension:0.4
+      }
+    },
+    plugins: {
+      filler: {
+        propagate: false,
+      },
+      title: {
+        display: true,
+        text: "thxv"
+      }
+    },
+    interaction: {
+      intersect: false,
+    }
+    
+  };
+  public barChartLabels: string[] = this.monthsForLabel;
+  public barChartLegend: boolean = true;
+  public lineChartType: ChartType = "line";
+  public barChartData: any[] = [
+    { data: this.revenueData, label: 'Revenue' },
+    { data: this.expenseData, label: 'Expense' }
+  ];
+
+  // events
+  public chartClicked(e: any): void {
+      console.log(e);
+  }
+
+  public chartHovered(e: any): void {
+      console.log(e);
+  }
+
   callApi(selectedValue:any){
     console.log(selectedValue);
     
@@ -237,21 +125,52 @@ export class PnlComponent implements OnInit {
     
   callDuration(e:any) {  
     console.log(e.value); 
-    this.formatMyDate(e.value); 
+    this.formatMyDate(e.value);
   }  
 
-  formatMyDate(datee:any){
-    const date = new Date(Date.parse(datee));
-    this.fetchpnl(this.datePipe.transform(date,"yyyy-MM-dd"));
+  async formatMyDate(datee:any){
+    var date = new Date(Date.parse(datee));
+    await this.fetchpnl(this.datePipe.transform(date,"yyyy-MM-dd"));
+    if(this.monthsForLabel.length > 0){
+      this.monthsForLabel = [];
+      for(let m=0; m < 6; m++){
+        this.monthsForLabel.push(this.monthNames[date.getMonth()]);
+        date.setMonth(date.getMonth() - 1);
+      }
+      //reversing the array = 
+      this.barChartLabels = this.monthsForLabel.reverse();
+
+    }
+    
+    
   }
 
   async fetchpnl(mydate:any){
     this.isLoading = true;
     (await this.codat.getPnl(mydate)).subscribe((res=>{
       this.pnldata = res;
-      console.log("i am pnl data", this.pnldata);
-      
+
+      //data for chart data
+      this.revenueData = [];
+      this.expenseData = [];
+    
       if(res.reports.length > 0){
+
+        for(let n=0;n<6;n++){
+          this.revenueData.push(this.pnldata.reports[n].income.value);
+          this.expenseData.push(this.pnldata.reports[n].expenses.value);
+        }
+        this.revenueData = this.revenueData.reverse();
+        this.expenseData = this.expenseData.reverse()
+        console.log("i am Revenue", this.revenueData);
+        console.log("i am Expense", this.expenseData);
+        //setting the data values in the line chart
+        this.barChartData[0].data = this.revenueData;
+        this.barChartData[1].data = this.expenseData;
+        this.barChartData[0].label = "Revenue";
+        this.barChartData[1].label = "Expense";
+
+
         this.IncomeThisMonth = parseInt(this.pnldata.reports[0].income.value);
         this.IncomePreviousMonth = this.pnldata.reports[1].income.value;
         if(this.IncomePreviousMonth > 0 && this.IncomeThisMonth > 0){

@@ -30,6 +30,18 @@
 <div class="column">
     <canvas id="mychart" width="1392" height="696" style="display: block; box-sizing: border-box; height: 348px; width: 696px;"></canvas>
 </div>
+
+  <div style="display: block">
+    <canvas baseChart
+        [datasets]="barChartData"
+        [labels]="barChartLabels"
+        [options]="barChartOptions"
+        [legend]="barChartLegend"
+        [type]="lineChartType"
+        (chartHover)="chartHovered($event)"
+        (chartClick)="chartClicked($event)"></canvas>
+  </div>
+
 <mat-spinner *ngIf="isLoading"></mat-spinner>
 
 

@@ -12,26 +12,20 @@
   <div style="flex:1">
     <div style="display:flex;">
       <span routerLink="" style="flex:1">Home</span>
-      <span routerLink="pnl" style="flex:1">Profit and Loss</span>
+      <span routerLink="pnl" style="flex:1">PNL</span>
+      <span routerLink="testpnl" style="flex:1">PNL 2</span>
     </div>
  
   </div>
  
 </div>
-
-<div class="content" role="main">
-  <router-outlet></router-outlet>
-
-  <!-- Highlight Card -->
- 
-
+<router-outlet></router-outlet>
+<!-- <div class="content" role="main">
   <ul>
     <li style="font-size:large" *ngFor="let book of response;let indexOfelement=index;">
       Net assets i have on : {{book.date}} are :  {{book.netAssets}} 
     </li>
 </ul>
-
-
 <ul>
   <li style="font-size:large" *ngFor="let book of response;let indexOfelement=index;">
     <p *ngFor="let asset of book.assets.items;let myindex=index;" style="font-size: 20;color:green;font-family: 'Courier New', Courier, monospace;"> 
@@ -39,13 +33,8 @@
     </p>
   </li>
 </ul>
-
 <p style="font-size: 20;">{{earningInvoices | json}}</p>
-
-
 <div style="font-size: 20px;margin: 20px;"><p>{{bankStatements | json}}</p></div>
-
-  
-</div>
+</div> -->
 
 
