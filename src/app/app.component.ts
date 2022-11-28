@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { AnyCatcher } from 'rxjs/internal/AnyCatcher';
 import { CodatapiService } from 'src/services/codatapi.service';
+import { MyAuthService } from 'src/services/my-auth.service';
 
 @Component({
   selector: 'app-root',
@@ -12,12 +14,21 @@ export class AppComponent implements OnInit{
   response:any;
   earningInvoices:any;
   bankStatements:any;
-  constructor(private codat:CodatapiService){}
+  constructor(private codat:CodatapiService,private auth:MyAuthService,private router:Router){}
 
   ngOnInit(): void {
-    this.fetchComapny();  
-    this.fetchInvoicesEarnings();  
-    this.fetchBankStatements();
+    // this.fetchComapny();  
+    // this.fetchInvoicesEarnings();  
+    // this.fetchBankStatements();
+  }
+
+  logoutApp(){
+    console.log("logging out");
+    this.auth.signout();
+    this.router.navigate(['signin']);
+    //logout and then redirect to the sign in page
+
+    
   }
 
   fetchComapny() {

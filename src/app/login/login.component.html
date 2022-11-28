@@ -1,0 +1,30 @@
+<div style="margin:80px;color:white">p</div>
+<div style="display:flex;justify-content:center;align-items:center ">
+    <div>
+         <form [formGroup]="signup" (ngSubmit)="onSubmit()" class="form" style="width: 400px;">
+          <p style="font-weight: bold;font-size: 1.5rem; text-align: center;margin-bottom: 15%;"> Sign In</p>
+        
+          
+          <input type="email" placeholder="Email" id="email" formControlName="email" class="input" />
+          <div [class.displayNone]="signup.get('email')?.valid || signup.get('email')?.untouched  " >
+            <small *ngIf = "signup.get('email')?.errors?.['required']" class="myclasforstyle">Email is Required</small>
+            <small *ngIf = "signup.get('email')?.errors?.['email']" class="myclasforstyle">Email Format not Correct</small>
+          </div>
+          
+          <input type="password" placeholder="Password" id="password" formControlName="password" class="input" />
+          <div [class.displayNone]="signup.get('password')?.valid || signup.get('password')?.untouched  " >
+            <small *ngIf = "signup.get('password')?.errors?.['required']" class="myclasforstyle">Password is Required</small>
+            <small *ngIf = "signup.get('password')?.errors?.['minlength']" class="myclasforstyle">Password Should be Atleast 3 letters</small>
+          </div>
+          
+          <!-- <input type="password" placeholder="Confirm Password" id="cnfpassword" formControlName="cnfpassword" class="input" />
+          <small *ngIf = "signup.get('restName')?.errors?.['required']" class="myclasforstyle">Passwords Don't Match</small>
+           -->
+           <div *ngIf="error" class="myclasforstyle">{{error}}</div>
+          <button class="btn" style="background-color: greenyellow;" type="submit">Sign In</button>
+      
+          <p style="font-weight: bold;text-align: center;margin-top: 20%;"><a style="font-weight: 700px;color: skyblue;padding-left: 10px;" routerLink="/signup">Sign Up</a></p>
+      </form>
+
+    </div>
+</div>

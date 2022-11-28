@@ -2,11 +2,30 @@
 <div style="display:flex;width: 100%;height: 80px;">
     <div style="flex:1;align-items: center;justify-content: start;padding-top: 25px;">
         <b style="font-size: 25px;color: black;padding-left: 30px;">Hii {{comapnyName}}</b>
+        
     </div>
     <div style="flex:1;">
         <div style="display:flex;align-items: center;justify-content:end;padding-top: 25px;">
-            <p style="font-size: 14px;color: black;padding-right: 30px;margin-bottom:0px;">Showing Data From  {{startData}} - {{endData}}</p>
-            <div style="padding-right: 30px;">datechanger</div>
+            <!-- <p style="font-size: 14px;color: black;padding-right: 30px;margin-bottom:0px;">Showing Data From  {{startData}} - {{endData}}</p> -->
+            <form style="padding-right: 30px;">
+                <mat-form-field appearance="fill">
+                    <mat-label>Select Month</mat-label>
+                    <mat-select [(ngModel)]="selectedValue" name="dur" (selectionChange)="callDuration($event)">
+                    <mat-option *ngFor="let myvalue of dur" [value]="myvalue">
+                        {{myvalue}}
+                    </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field appearance="fill" style="margin-left: 10px;">
+                    <mat-label>Select Year</mat-label>
+                    <mat-select [(ngModel)]="selectedYearValue" name="year" (selectionChange)="callDuration($event)">
+                    <mat-option *ngFor="let myValue of year" [value]="myValue">
+                        {{myValue}}
+                    </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <button style="margin-left:10px;" mat-raised-button color="primary" (click)="searchNewDate(selectedValue,selectedYearValue)">Search</button>
+            </form>
         </div>
     </div>
 </div>
@@ -16,41 +35,71 @@
         <div style="display:flex;flex-direction: row;flex-wrap: wrap;justify-content: center;align-items: center;">
             <div style="height:200px;width:300px;background-color: rgb(213, 213, 213);margin: 20px;border-radius: 25px;display:flex;justify-content: center;align-items: center;flex-direction: column;">
                 <p style="font-size: 16px;font-family:Arial, Helvetica, sans-serif;padding-bottom:25px;font-weight: bold;">Total Revenue</p>
-                <p style="font-size: 30px;font-weight:bold;font-family:Arial, Helvetica, sans-serif">{{totalRevenues}} {{currentCurrency}}</p>
-                <p style="font-size: 16px;font-family:Arial, Helvetica, sans-serif;padding-top:15px">{{revenuePercentChange}} %</p>
+                <p style="font-size: 30px;font-weight:bold;font-family:Arial, Helvetica, sans-serif">{{totalRevenues == 0 ? 'NaN': totalRevenues + " "+currentCurrency}}</p>
+                <p style="font-size: 16px;font-family:Arial, Helvetica, sans-serif;padding-top:15px">{{revenuePercentChange == null ? '': revenuePercentChange + " %"}} </p>
             </div>
             <div style="height:200px;width:300px;background-color: rgb(213, 213, 213);margin: 20px;border-radius: 25px;display:flex;justify-content: center;align-items: center;flex-direction: column;">
                 <p style="font-size: 16px;font-family:Arial, Helvetica, sans-serif;padding-bottom:25px;font-weight: bold;">Nett Revenue</p>
-                <p style="font-size: 30px;font-weight:bold;font-family:Arial, Helvetica, sans-serif">{{netRevenues}} {{currentCurrency}}</p>
-                <p style="font-size: 16px;font-family:Arial, Helvetica, sans-serif;padding-top:15px">{{netRevenuePercentChange}} %</p>
+                <p style="font-size: 30px;font-weight:bold;font-family:Arial, Helvetica, sans-serif">{{netRevenues == 0 ? 'NaN': netRevenues + " "+currentCurrency}}</p>
+                <p style="font-size: 16px;font-family:Arial, Helvetica, sans-serif;padding-top:15px">{{netRevenuePercentChange == null ? '': netRevenuePercentChange + " %"}} </p>
             </div>
             <div style="height:200px;width:300px;background-color: rgb(213, 213, 213);margin: 20px;border-radius: 25px;display:flex;justify-content: center;align-items: center;flex-direction: column;">
                 <p style="font-size: 16px;font-family:Arial, Helvetica, sans-serif;padding-bottom:25px;font-weight: bold;">Gross Revenue</p>
-                <p style="font-size: 30px;font-weight:bold;font-family:Arial, Helvetica, sans-serif">{{grossRevenues}} {{currentCurrency}}</p>
-                <p style="font-size: 16px;font-family:Arial, Helvetica, sans-serif;padding-top:15px">{{grossRevenuePercentChange}} %</p>
+                <p style="font-size: 30px;font-weight:bold;font-family:Arial, Helvetica, sans-serif">{{grossRevenues == 0 ? 'NaN': grossRevenues + " "+currentCurrency}}</p>
+                <p style="font-size: 16px;font-family:Arial, Helvetica, sans-serif;padding-top:15px">{{grossRevenuePercentChange == null ? '': grossRevenuePercentChange + " %"}} </p>
             </div>
             <div style="height:200px;width:300px;background-color: rgb(213, 213, 213);margin: 20px;border-radius: 25px;display:flex;justify-content: center;align-items: center;flex-direction: column;">
                 <p style="font-size: 16px;font-family:Arial, Helvetica, sans-serif;padding-bottom:25px;font-weight: bold;">Total Expenses</p>
-                <p style="font-size: 30px;font-weight:bold;font-family:Arial, Helvetica, sans-serif">{{totalExpenses}} {{currentCurrency}}</p>
-                <p style="font-size: 16px;font-family:Arial, Helvetica, sans-serif;padding-top:15px">{{expensePercentChange}} %</p>
+                <p style="font-size: 30px;font-weight:bold;font-family:Arial, Helvetica, sans-serif">{{totalExpenses == 0 ? 'NaN': totalExpenses + " "+currentCurrency}}</p>
+                <p style="font-size: 16px;font-family:Arial, Helvetica, sans-serif;padding-top:15px">{{expensePercentChange == null ? '': expensePercentChange + " %"}} </p>
             </div>
             <div style="height:200px;width:300px;background-color: rgb(213, 213, 213);margin: 20px;border-radius: 25px;display:flex;justify-content: center;align-items: center;flex-direction: column;">
                 <p style="font-size: 16px;font-family:Arial, Helvetica, sans-serif;padding-bottom:25px;font-weight: bold;">COGS</p>
-                <p style="font-size: 30px;font-weight:bold;font-family:Arial, Helvetica, sans-serif">{{cogs}} {{currentCurrency}}</p>
-                <p style="font-size: 16px;font-family:Arial, Helvetica, sans-serif;padding-top:15px">{{cogsPercentChange}} %</p>
+                <p style="font-size: 30px;font-weight:bold;font-family:Arial, Helvetica, sans-serif">{{cogs == 0 ? 'NaN': cogs + " "+currentCurrency}}</p>
+                <p style="font-size: 16px;font-family:Arial, Helvetica, sans-serif;padding-top:15px">{{cogsPercentChange == null ? '': cogsPercentChange + " %"}} </p>
             </div>
             <div style="height:200px;width:300px;background-color: rgb(213, 213, 213);margin: 20px;border-radius: 25px;display:flex;justify-content: center;align-items: center;flex-direction: column;">
                 <p style="font-size: 16px;font-family:Arial, Helvetica, sans-serif;padding-bottom:25px;font-weight: bold;">OPEX</p>
-                <p style="font-size: 30px;font-weight:bold;font-family:Arial, Helvetica, sans-serif">{{opex}} {{currentCurrency}}</p>
-                <p style="font-size: 16px;font-family:Arial, Helvetica, sans-serif;padding-top:15px">{{opexPercentChange}} %</p>
+                <p style="font-size: 30px;font-weight:bold;font-family:Arial, Helvetica, sans-serif">{{opex == 0 ? 'NaN': opex + " "+currentCurrency}}</p>
+                <p style="font-size: 16px;font-family:Arial, Helvetica, sans-serif;padding-top:15px">{{opexPercentChange == null ? '': opexPercentChange + " %"}} </p>
             </div>
+
+        <!-- <b style="font-size: 25px;color: black;padding: 30px;">COGS [{{reportsPastSixMonths}}]</b> -->
         </div>
     </div>
     <div style="flex:1;">
         <div style="display:flex;flex-direction: row;flex-wrap: wrap;justify-content: center;align-items: center;">
-            <div style="height:400px;width:600px;background-color: rgb(213, 213, 213);margin: 20px;border-radius: 25px;">I am the card</div>
-            <div style="height:400px;width:600px;background-color: rgb(213, 213, 213);margin: 20px;border-radius: 25px;">I am the card</div>
-            <div style="height:400px;width:600px;background-color: rgb(213, 213, 213);margin: 20px;border-radius: 25px;">I am the card</div>
+                <div style="height:90%;width:90%;background-color: rgb(213, 213, 213);margin: 20px;padding:30px;padding-top:0px;border-radius: 25px;display:flex;justify-content: center;align-items: center;flex-direction: column;">
+                    <canvas baseChart
+                    [datasets]="barChartData"
+                    [labels]="barChartLabels"
+                    [options]="barChartOptions"
+                    [legend]="barChartLegend"
+                    [type]="lineChartType"
+                    ></canvas>
+                     <!-- (chartHover)="chartHovered($event)"
+                    (chartClick)="chartClicked($event)" -->
+                </div>
+                <div style="height:90%;width:90%;background-color: rgb(213, 213, 213);margin: 20px;padding:30px;padding-top:0px;border-radius: 25px;display:flex;justify-content: center;align-items: center;flex-direction: column;">
+                    <canvas baseChart
+                    [datasets]="netRevenueDatas"
+                    [labels]="barChartLabels"
+                    [options]="barChartOptionsNetRevenue"
+                    [legend]="barChartLegend"
+                    [type]="lineChartType"
+                    ></canvas>
+                     <!-- (chartHover)="chartHovered($event)"
+                    (chartClick)="chartClicked($event)" -->
+                </div>
+                <div style="height:90%;width:90%;background-color: rgb(213, 213, 213);margin: 20px;padding:30px;padding-top:0px;border-radius: 25px;display:flex;justify-content: center;align-items: center;flex-direction: column;">
+                    <canvas baseChart
+                    [datasets]="opexVscogsDatas"
+                    [labels]="barChartLabels"
+                    [options]="barChartOptionsOPEXvsCOGS"
+                    [legend]="barChartLegend"
+                    [type]="lineChartType"
+                    ></canvas>
+                </div>
         </div>
     </div>
 </div>

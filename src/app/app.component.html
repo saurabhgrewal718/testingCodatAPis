@@ -1,19 +1,18 @@
 <!-- Toolbar -->
-<div class="toolbar" role="banner">
-  <div style="flex:3">
+<div class="toolbar" role="banner" style="background-color: rgb(156, 209, 255);">
+  <div style="flex:3;">
     <img
-    width="40"
-    alt="Angular Logo"
-    src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg=="
+    width="200"
+    alt="Finanshels"
+    src="https://uploads-ssl.webflow.com/634fc8d084a32a7597b0bde8/63750666a7ae3904f2f87861_Finanshels%20Main%20Logo.svg"
   />
-  <span>Codat API Test App</span>
+
   </div>
  
   <div style="flex:1">
     <div style="display:flex;">
-      <span routerLink="" style="flex:1">Home</span>
-      <span routerLink="pnl" style="flex:1">PNL</span>
-      <span routerLink="testpnl" style="flex:1">PNL 2</span>
+      <span routerLink="dashboard" style="flex:1;margin-top: 10px;justify-content: center;align-content: center;color: black;"></span>
+      <button mat-raised-button color="warn" (click)="logoutApp()" style="margin-right:45px">Logout</button>
     </div>
  
   </div>
