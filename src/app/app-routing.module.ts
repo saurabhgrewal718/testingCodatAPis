@@ -7,8 +7,7 @@ import { SignupComponent } from './signup/signup.component';
 import { TestpnlComponent } from './testpnl/testpnl.component';
 
 const routes: Routes = [
-  {path:'',component:AppComponent}, 
-  { path: '', redirectTo: 'signin', pathMatch: 'full' }, 
+  { path:'', redirectTo: 'signin', pathMatch: 'full' }, 
   {path:'pnl',component:PnlComponent,pathMatch:'full'},
   {path:'dashboard',component:TestpnlComponent,pathMatch:'full'},
   {path:'signin',component:LoginComponent,pathMatch:'full'},

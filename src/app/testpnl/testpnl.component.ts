@@ -169,8 +169,14 @@ export class TestpnlComponent implements OnInit {
 
 
   ngOnInit(): void {
+
+    //check weather you are logged in or not
+
+    //if not logged in send back to sign in page
+
     // steps to show card after the ngOnInit method-     
     // 1) get the current date
+
     this.currentDateOnNgInit = new Date()
 
     // 2) format the date in yyyy-mm-dd 
