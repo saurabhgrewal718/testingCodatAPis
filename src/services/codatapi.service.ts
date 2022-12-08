@@ -18,7 +18,6 @@ export class CodatapiService {
   endpoint = "https://api.codat.io"; 
 
   getData(){
-    console.log("i ran");
     this.http.get("/companies/37aca907-fa24-4505-8774-32d4c137c1a4/data/financials/balanceSheet?endMonth=2020-12-01T00%3A00%3A00&periodLength=1&periodsToCompare=6",this.httpHeader).subscribe((res)=>{
       return res;
     });
@@ -46,14 +45,17 @@ export class CodatapiService {
   async getPnl(myDate:any): Promise<Observable<any>> {
     if(myDate!=null){
       return await this.http
-      .get<any>(`/companies/37aca907-fa24-4505-8774-32d4c137c1a4/data/financials/profitAndLoss?periodLength=1&periodsToCompare=6&startMonth=${myDate}%20`,this.httpHeader)
+      .get<any>(`http://ec2-3-110-165-125.ap-south-1.compute.amazonaws.com:3000/getAPIResponse/${myDate}`,this.httpHeader)
       .pipe(retry(1), catchError(this.processError));
     }else{
       var myNewDate = new Date();
       return await this.http
-      .get<any>(`/companies/37aca907-fa24-4505-8774-32d4c137c1a4/data/financials/profitAndLoss?periodLength=1&periodsToCompare=12&startMonth=${myNewDate}%20`,this.httpHeader)
+      .get<any>(`http://ec2-3-110-165-125.ap-south-1.compute.amazonaws.com:3000/getAPIResponse/${myNewDate}`,this.httpHeader)
       .pipe(retry(1), catchError(this.processError));
     }
+
+    // http://localhost:9092/codatpnl 
+    // .get<any>(`/companies/37aca907-fa24-4505-8774-32d4c137c1a4/data/financials/profitAndLoss?periodLength=1&periodsToCompare=12&startMonth=${myNewDate}%20`,this.httpHeader)
     
     
    
